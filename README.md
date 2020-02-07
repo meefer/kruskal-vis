@@ -1,5 +1,5 @@
 # it
-![it](https://github.com/meefer/it/workflows/it/badge.svg?branch=master)
+![ci](https://github.com/meefer/it/workflows/ci/badge.svg)
 ```
      ●──────────●
      |          |
