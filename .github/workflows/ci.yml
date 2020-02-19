@@ -13,16 +13,18 @@ jobs:
       id: go
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2
-    - name: Cache deps
-      uses: actions/cache@v1
-      with:
-        path: ~/go/pkg/mod
-        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-        restore-keys: |
-          ${{ runner.os }}-go-
-      id: cache-deps
+    - name: Check if commit conforms to policies listed in .conform.yaml
+      uses: talos-systems/conform@v0.1.0-alpha.17
+    # - name: Cache deps
+    #   uses: actions/cache@v1
+    #   with:
+    #     path: ~/go/pkg/mod
+    #     key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+    #     restore-keys: |
+    #       ${{ runner.os }}-go-
+    #   id: cache-deps
     - name: Get dependencies
-      if: steps.cache-deps.outputs.cache-hit != 'true'
+      # if: steps.cache-deps.outputs.cache-hit != 'true'
       run: |
         go get -v -t -d ./...
     - name: Build
