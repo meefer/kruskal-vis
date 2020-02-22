@@ -1,7 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/meefer/it/kruskal"
+)
 
 func main() {
-	fmt.Println("Union find")
+	g := kruskal.NewGraph(20)
+	fmt.Println(g)
+	kruskal.DrawGraph(g, "image.png")
 }
