@@ -25,7 +25,7 @@ func (g *Graph) String() string {
 }
 
 // NewGraph constructs new Graph value
-func NewGraph(N int) *Graph { // TODO: fix graph edges generation & extract to external package
+func NewGraph(N int) *Graph {
 	nodes := make([]*Node, N)
 	edges := make([][]int, N)
 
@@ -33,16 +33,13 @@ func NewGraph(N int) *Graph { // TODO: fix graph edges generation & extract to e
 		nodes[i] = &Node{rand.Float64(), rand.Float64()}
 	}
 	for from := range edges {
-		tos := make([]int, 0, N-1)
-		for to := range nodes {
+		for to := from + 1; to < N; to++ {
 			connected := rand.Float64()
-			if from != to && connected < 0.5 {
-				l := len(tos)
-				tos = tos[:l+1]
-				tos[l] = to
+			if connected < 0.5 {
+				edges[from] = append(edges[from], to)
+				edges[to] = append(edges[to], from)
 			}
 		}
-		edges[from] = tos
 	}
 
 	return &Graph{nodes, edges}
