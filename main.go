@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"image/color"
+	"os"
 
 	"github.com/meefer/it/kruskal"
 )
@@ -9,5 +11,7 @@ import (
 func main() {
 	g := kruskal.NewGraph(20)
 	fmt.Println(g)
-	kruskal.DrawGraph(g, "image.png")
+
+	f, _ := os.Create("image.png")
+	kruskal.DrawGraph(f, color.White, g)
 }
