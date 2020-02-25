@@ -38,8 +38,10 @@ func DrawGraph(g *Graph, path string) {
 		fmt.Println(fromp)
 		DrawCircle(img, fromp)
 		for _, j := range nodes {
-			top := point(g.nodes[j])
-			DrawLine(img, fromp, top)
+			if j > i {
+				top := point(g.nodes[j])
+				DrawLine(img, fromp, top)
+			}
 		}
 	}
 
