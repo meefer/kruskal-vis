@@ -60,7 +60,19 @@ func drawCircle(img *image.RGBA, clr color.Color, c image.Point) {
 // drawLine draws line from a to b on the provided image
 func drawLine(img *image.RGBA, clr color.Color, a, b image.Point) {
 	dx := b.X - a.X
+	if dx == 0 {
+		for y := a.Y; y <= b.Y; y++ {
+			img.Set(a.X, y, clr)
+		}
+		return
+	}
 	dy := b.Y - a.Y
+	if dy == 0 {
+		for x := a.X; x <= b.X; x++ {
+			img.Set(x, a.Y, clr)
+		}
+		return
+	}
 
 	m := float64(dy) / float64(dx)
 	c := float64(b.Y) - m*float64(b.X)
