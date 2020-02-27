@@ -28,19 +28,31 @@ func (g *Graph) String() string {
 func NewGraph(N int) *Graph {
 	nodes := make([]*Node, N)
 	edges := make([][]int, N)
-
 	for i := range nodes {
 		nodes[i] = &Node{rand.Float64(), rand.Float64()}
 	}
+
+	g := &Graph{nodes, edges}
 	for from := range edges {
 		for to := from + 1; to < N; to++ {
 			connected := rand.Float64()
 			if connected < 0.5 {
-				edges[from] = append(edges[from], to)
-				edges[to] = append(edges[to], from)
+				g.SetEdge(from, to)
 			}
 		}
 	}
 
 	return &Graph{nodes, edges}
+}
+
+// AddNode adds new vertex to a graph
+func (g *Graph) AddNode(n *Node) int {
+	g.nodes = append(g.nodes, n)
+	return len(g.nodes) - 1
+}
+
+// SetEdge creates new edge in a graph
+func (g *Graph) SetEdge(from, to int) {
+	g.edges[from] = append(g.edges[from], to)
+	g.edges[to] = append(g.edges[to], from)
 }

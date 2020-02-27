@@ -3,6 +3,7 @@ package kruskal
 import (
 	"image"
 	"image/color"
+	"image/color/palette"
 	"image/png"
 	"io"
 	"math"
@@ -16,7 +17,7 @@ const (
 
 // DrawGraph creates a picture of graph and stores it to fs
 func DrawGraph(w io.Writer, c color.Color, g *Graph) {
-	img := image.NewRGBA(image.Rect(0, 0, width, height))
+	img := image.NewPaletted(image.Rect(0, 0, width, height), palette.WebSafe)
 
 	for i, nodes := range g.edges {
 		fromp := point(g.nodes[i])
@@ -32,6 +33,25 @@ func DrawGraph(w io.Writer, c color.Color, g *Graph) {
 	png.Encode(w, img)
 }
 
+// DrawNodes creates a picture of graph and stores it to fs
+func DrawNodes(c color.Color, g *Graph) *image.Paletted {
+	img := image.NewPaletted(image.Rect(0, 0, width, height), palette.WebSafe)
+
+	for i := range g.edges {
+		fromp := point(g.nodes[i])
+		drawCircle(img, c, fromp)
+	}
+
+	return img
+}
+
+// DrawEdge creates a picture of graph and stores it to fs
+func DrawEdge(img *image.Paletted, c color.Color, g *Graph, u, v int) *image.Paletted {
+	drawLine(img, c, point(g.nodes[u]), point(g.nodes[v]))
+
+	return img
+}
+
 func point(n *Node) image.Point {
 	return image.Pt(
 		round(n.x*width),
@@ -44,7 +64,7 @@ func round(f float64) int {
 }
 
 // drawCircle draws circle with a center in c on the provided image
-func drawCircle(img *image.RGBA, clr color.Color, c image.Point) {
+func drawCircle(img *image.Paletted, clr color.Color, c image.Point) {
 	for x := c.X - r; x <= c.X+r; x++ {
 		y := round(math.Sqrt(float64(r*r - (x-c.X)*(x-c.X))))
 		img.Set(x, c.Y+y, clr)
@@ -58,7 +78,7 @@ func drawCircle(img *image.RGBA, clr color.Color, c image.Point) {
 }
 
 // drawLine draws line from a to b on the provided image
-func drawLine(img *image.RGBA, clr color.Color, a, b image.Point) {
+func drawLine(img *image.Paletted, clr color.Color, a, b image.Point) {
 	dx := b.X - a.X
 	if dx == 0 {
 		for y := a.Y; y <= b.Y; y++ {

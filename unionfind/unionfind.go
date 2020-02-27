@@ -7,3 +7,8 @@ type UnionFind interface {
 	Union(p, q int)
 	Connected(p, q int) bool
 }
+
+// NewUnionFind returns new disjoint-set data structure (union-find) instance
+func NewUnionFind(N int) UnionFind {
+	return NewWeightedQU(N)
+}
