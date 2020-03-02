@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	width  = 1000
-	height = 1000
+	width  = maxNodeXY
+	height = maxNodeXY
 	r      = 6
 )
 
@@ -53,10 +53,7 @@ func DrawEdge(img *image.Paletted, c color.Color, g *Graph, u, v int) *image.Pal
 }
 
 func point(n *Node) image.Point {
-	return image.Pt(
-		round(n.x*width),
-		round(n.y*height),
-	)
+	return image.Pt(n.x, n.y)
 }
 
 func round(f float64) int {

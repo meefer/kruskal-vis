@@ -21,7 +21,7 @@ type byDistance struct {
 func (g byDistance) d(i int) float64 {
 	e := g.es[i]
 	u, v := g.nodes[e[0]], g.nodes[e[1]]
-	return math.Sqrt((v.x-u.x)*(v.x-u.x) + (v.y-u.y)*(v.y-u.y))
+	return math.Sqrt(float64((v.x-u.x)*(v.x-u.x) + (v.y-u.y)*(v.y-u.y)))
 }
 func (g byDistance) Len() int           { return len(g.es) }
 func (g byDistance) Less(i, j int) bool { return g.d(i) < g.d(j) }

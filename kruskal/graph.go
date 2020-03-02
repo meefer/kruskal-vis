@@ -5,9 +5,11 @@ import (
 	"math/rand"
 )
 
+const maxNodeXY = 1000
+
 // Node represents a node of a graph
 type Node struct {
-	x, y float64
+	x, y int
 }
 
 // Graph represents a graph math structure
@@ -29,7 +31,7 @@ func NewGraph(N int) *Graph {
 	nodes := make([]*Node, N)
 	edges := make([][]int, N)
 	for i := range nodes {
-		nodes[i] = &Node{rand.Float64(), rand.Float64()}
+		nodes[i] = &Node{rand.Intn(maxNodeXY), rand.Intn(maxNodeXY)}
 	}
 
 	g := &Graph{nodes, edges}
