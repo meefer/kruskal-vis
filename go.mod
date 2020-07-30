@@ -1,3 +1,3 @@
-module github.com/meefer/it
+module github.com/meefer/kruskal-vis
 
 go 1.13

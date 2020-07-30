@@ -9,7 +9,7 @@ import (
 	"math"
 	"sort"
 
-	"github.com/meefer/it/unionfind"
+	"github.com/meefer/kruskal-vis/unionfind"
 )
 
 type edge [2]int

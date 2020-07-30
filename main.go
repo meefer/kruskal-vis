@@ -5,7 +5,7 @@ import (
 	"image/color"
 	"os"
 
-	"github.com/meefer/it/kruskal"
+	"github.com/meefer/kruskal-vis/kruskal"
 )
 
 func main() {
