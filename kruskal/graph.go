@@ -5,25 +5,26 @@ import (
 	"math/rand"
 )
 
-const maxNodeXY = 1000
+// MaxNodeXY is a maximum value of x and y coordinates for a graph node
+const MaxNodeXY = 1000
 
 // Node represents a node of a graph
 type Node struct {
-	x, y int
+	X, Y int
 }
 
 // Graph represents a graph math structure
 type Graph struct {
-	nodes []*Node
-	edges [][]int
+	Nodes []*Node
+	Edges [][]int
 }
 
 func (g *Graph) String() string {
 	nodes := ""
-	for _, n := range g.nodes {
+	for _, n := range g.Nodes {
 		nodes += fmt.Sprintf("%v ", *n)
 	}
-	return fmt.Sprintf("%s%v", nodes, g.edges)
+	return fmt.Sprintf("%s%v", nodes, g.Edges)
 }
 
 // NewGraph constructs new Graph value
@@ -31,7 +32,7 @@ func NewGraph(N int) *Graph {
 	nodes := make([]*Node, N)
 	edges := make([][]int, N)
 	for i := range nodes {
-		nodes[i] = &Node{rand.Intn(maxNodeXY), rand.Intn(maxNodeXY)}
+		nodes[i] = &Node{rand.Intn(MaxNodeXY), rand.Intn(MaxNodeXY)}
 	}
 
 	g := &Graph{nodes, edges}
@@ -49,12 +50,12 @@ func NewGraph(N int) *Graph {
 
 // AddNode adds new vertex to a graph
 func (g *Graph) AddNode(n *Node) int {
-	g.nodes = append(g.nodes, n)
-	return len(g.nodes) - 1
+	g.Nodes = append(g.Nodes, n)
+	return len(g.Nodes) - 1
 }
 
 // SetEdge creates new edge in a graph
 func (g *Graph) SetEdge(from, to int) {
-	g.edges[from] = append(g.edges[from], to)
-	g.edges[to] = append(g.edges[to], from)
+	g.Edges[from] = append(g.Edges[from], to)
+	g.Edges[to] = append(g.Edges[to], from)
 }

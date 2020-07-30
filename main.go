@@ -5,6 +5,7 @@ import (
 	"image/color"
 	"os"
 
+	gimage "github.com/meefer/kruskal-vis/image"
 	"github.com/meefer/kruskal-vis/kruskal"
 )
 
@@ -13,11 +14,15 @@ func main() {
 	fmt.Println(g)
 
 	f, _ := os.Create("image.png")
-	kruskal.DrawGraph(f, color.White, g)
+	gimage.DrawGraph(f, color.White, g)
 
-	anim, _ := os.Create("kruskal_anim.gif")
-	a := kruskal.Kruskal(anim, g)
-	fmt.Println(a)
+	recorder := gimage.NewRecorder(g)
+	sptree := kruskal.Kruskal(recorder, g)
+	fmt.Println(sptree)
+
+	gifile, _ := os.Create("kruskal_anim.gif")
+	recorder.Gif(gifile)
+
 	k, _ := os.Create("kruskal.png")
-	kruskal.DrawGraph(k, color.White, a)
+	gimage.DrawGraph(k, color.White, sptree)
 }
