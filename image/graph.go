@@ -11,9 +11,11 @@ import (
 )
 
 const (
-	width  = k.MaxNodeXY
-	height = k.MaxNodeXY
-	r      = 6
+	// MaxWidth is a maximum value of x coordinate for a graph node
+	MaxWidth = 1000
+	// MaxHeight is a maximum value of y coordinate for a graph node
+	MaxHeight = 1000
+	r         = 6
 )
 
 func point(n *k.Node) image.Point {
@@ -22,7 +24,7 @@ func point(n *k.Node) image.Point {
 
 // DrawGraph creates a picture of graph and stores it to fs
 func DrawGraph(w io.Writer, c color.Color, g *k.Graph) {
-	img := image.NewPaletted(image.Rect(0, 0, width, height), palette.WebSafe)
+	img := image.NewPaletted(image.Rect(0, 0, MaxWidth, MaxHeight), palette.WebSafe)
 
 	for i, nodes := range g.Edges {
 		fromp := point(g.Nodes[i])
@@ -40,7 +42,7 @@ func DrawGraph(w io.Writer, c color.Color, g *k.Graph) {
 
 // DrawNodes creates a picture of graph and stores it to fs
 func DrawNodes(c color.Color, g *k.Graph) *image.Paletted {
-	img := image.NewPaletted(image.Rect(0, 0, width, height), palette.WebSafe)
+	img := image.NewPaletted(image.Rect(0, 0, MaxWidth, MaxHeight), palette.WebSafe)
 
 	for i := range g.Edges {
 		fromp := point(g.Nodes[i])
