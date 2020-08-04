@@ -11,15 +11,20 @@ import (
 	"github.com/meefer/kruskal-vis/kruskal"
 )
 
-const usage = `%s generates a random graph with a fixed number of nodes
+const (
+	usage = `kruskal-vis generates a random graph with a fixed number of nodes
 and runs it through Kruskal's minimum-spanning-tree algorithm
 producing three files in a working directory:
-	- graph.png -- original graph
-	- kruskal_anim.gif -- visualization of the Kruskal's algorithm 
-	- kruskal.png -- minimum spanning tree of the original graph
+  - %s -- original graph
+  - %s -- visualization of the Kruskal's algorithm 
+  - %s -- minimum spanning tree of the original graph
 Usage:
 `
-const insufficientRights = "don't have sufficient rights to create a file"
+	graphFilename      = "graph.png"
+	animFilename       = "kruskal_anim.gif"
+	sptreeFilename     = "kruskal.png"
+	insufficientRights = "don't have sufficient rights to create a file"
+)
 
 var (
 	n = flag.Int("N", 10, "number of graph nodes")
@@ -28,7 +33,7 @@ var (
 
 func main() {
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, usage, os.Args[0])
+		fmt.Fprintf(os.Stderr, usage, graphFilename, animFilename, sptreeFilename)
 		flag.PrintDefaults()
 	}
 	flag.Parse()
@@ -38,7 +43,7 @@ func main() {
 		fmt.Println(g)
 	}
 
-	f, e := os.Create("graph.png")
+	f, e := os.Create(graphFilename)
 	if e != nil {
 		exit(insufficientRights)
 	}
@@ -50,13 +55,13 @@ func main() {
 		fmt.Println(sptree)
 	}
 
-	gifile, e := os.Create("kruskal_anim.gif")
+	gifile, e := os.Create(animFilename)
 	if e != nil {
 		exit(insufficientRights)
 	}
 	recorder.Gif(gifile)
 
-	k, e := os.Create("kruskal.png")
+	k, e := os.Create(sptreeFilename)
 	if e != nil {
 		exit(insufficientRights)
 	}
@@ -85,5 +90,5 @@ func generateGraph(N int) (g *kruskal.Graph) {
 }
 
 func exit(err string) {
-	panic(os.Args[0] + ":" + err)
+	panic(os.Args[0] + ": " + err)
 }
