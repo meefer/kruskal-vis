@@ -28,9 +28,18 @@ jobs:
       run: |
         go get -v -t -d ./...
     - name: Build
-      run: go build -v .
+      run: |
+        go build -v
+        GOOS=js GOARCH=wasm go build -v -o static/kruskal-vis.wasm
     - name: Test
       run: go test ./...
+    - name: Prepare for Wasm
+      run: cp "$(go env GOROOT)/misc/wasm/wasm_exec.js" static
+    - name: GH Pages deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./static
     - name: Release # not ready yet
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
