@@ -3,9 +3,9 @@
 
 kruskal-vis is a command line tool to generate a gif demo for Kruskal's algorithm based on Euclidean distance.
 
-Demo can be found [here](http://google.com) ([Wasm](https://en.wikipedia.org/wiki/WebAssembly) runtime).
+Demo can be found [here](https://meefer.github.io/kruskal-vis) ([Wasm](https://en.wikipedia.org/wiki/WebAssembly) runtime).
 
-To install kruskal-vis run
+To install kruskal-vis locally run
 ```bash
 go get -u github.com/meefer/kruskal-vis
 ```
