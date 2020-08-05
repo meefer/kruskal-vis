@@ -1,0 +1,96 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>kruskal-vis</title>
+        <style>
+            body
+            {
+                margin: 0;
+                min-width: 400px;
+            }
+            header {
+                display: flex;
+                align-items: center;
+                height: 30px;
+                padding: 9px;
+                border: grey solid 1px;
+            }
+            header > * {
+                font-family: monospace;
+            }
+            header > hr {
+                width: 1px;
+                height: 100%;
+                background: grey;
+                border: none;
+                margin: 0 10px;
+            }
+            header > label {
+                margin-right: 5px;
+            }
+            #gif > img {
+                width: 100%;
+                height: calc(100% - 50px);
+                object-fit: contain;
+            }
+        </style>
+    </head>
+
+    <body>
+        <script src="wasm_exec.js"></script>
+        <script>
+            if (!WebAssembly.instantiateStreaming) {
+                WebAssembly.instantiateStreaming = async (resp, importObject) => {
+                    const source = await(await resp).arrayBuffer();
+                    return await WebAssembly.instantiate(source, importObject);
+                };
+            }
+            function sleep() {
+                return new Promise(requestAnimationFrame);
+            }
+            let ready = false;
+
+            async function init() {
+                const go = new Go();
+                let result = await WebAssembly.instantiateStreaming(fetch("kruskal-vis.wasm"), go.importObject);
+                go.run(result.instance);
+                ready = true;
+            }
+            init();
+
+            function runKruskal() {
+                const N = document.querySelector('#N').value || 10
+
+                return new Promise(async resolve => {
+                    while (!ready) {
+                        await sleep();
+                    }
+
+                    window.Kruskal(N, resolve)
+                }).then(gifArr => {
+                    console.log(gifArr);
+
+                    var blob = new Blob([gifArr], {'type': 'image/gif'});
+                    var image = document.createElement('img');
+                    image.src = URL.createObjectURL(blob);
+
+                    var gif = document.querySelector('#gif');
+                    if (gif.hasChildNodes()) {
+                        gif.replaceChild(image, gif.firstChild);
+                    } else {
+                        gif.appendChild(image);
+                    }
+                });
+            }
+        </script>
+        <header>
+            <h2>kruskal-vis</h2>
+            <hr/>
+            <label for="N">N:</label>
+            <input id="N" name="N" type="number" value="10" min="1" max="1000">
+            <hr/>
+            <button onClick="runKruskal()">Run</button>
+        </header>
+        <div id="gif"></div>
+    </body>
+</html>

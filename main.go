@@ -1,10 +1,11 @@
+// +build !js,!wasm
+
 package main
 
 import (
 	"flag"
 	"fmt"
 	"image/color"
-	"math/rand"
 	"os"
 
 	gimage "github.com/meefer/kruskal-vis/image"
@@ -66,27 +67,6 @@ func main() {
 		exit(insufficientRights)
 	}
 	gimage.DrawGraph(k, color.White, sptree)
-}
-
-func generateGraph(N int) (g *kruskal.Graph) {
-	// generate a random graph with N nodes
-	nodes := make([]*kruskal.Node, N)
-	edges := make([][]int, N)
-
-	for i := range nodes {
-		nodes[i] = &kruskal.Node{X: rand.Intn(gimage.MaxWidth), Y: rand.Intn(gimage.MaxHeight)}
-	}
-
-	g = &kruskal.Graph{Nodes: nodes, Edges: edges}
-	for from := range edges {
-		for to := from + 1; to < N; to++ {
-			connected := rand.Float64()
-			if connected < 0.5 {
-				g.SetEdge(from, to)
-			}
-		}
-	}
-	return
 }
 
 func exit(err string) {
