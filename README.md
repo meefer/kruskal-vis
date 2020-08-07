@@ -21,5 +21,7 @@ producing three files in a working directory:
 Usage:
   -N int
         number of graph nodes (default 10)
+  -d int
+        duration of an animation step (default 20)
   -t    if set, a textual graph presentation will be written to the standard output
 ```

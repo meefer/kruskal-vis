@@ -42,11 +42,11 @@ func (r *Recorder) SetEdge(from, to int) {
 	r.imgs = append(r.imgs, DrawEdge(r.currImg, green, r.g, from, to))
 }
 
-// Gif creates an animated gif from the recorded Kruskal's algorithm execution and writes it to the given writer
-func (r *Recorder) Gif(w io.Writer) {
+// WriteGif creates an animated gif from the recorded Kruskal's algorithm execution and writes it to the given writer
+func (r *Recorder) WriteGif(w io.Writer, delay int) {
 	delays := make([]int, len(r.imgs))
 	for i := range delays {
-		delays[i] = 10
+		delays[i] = delay
 	}
 	anim := gif.GIF{Delay: delays, Image: r.imgs}
 

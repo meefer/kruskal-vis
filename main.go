@@ -29,6 +29,7 @@ Usage:
 
 var (
 	n = flag.Int("N", 10, "number of graph nodes")
+	d = flag.Int("d", 20, "duration of an animation step")
 	t = flag.Bool("t", false, "if set, a textual graph presentation will be written to the standard output")
 )
 
@@ -60,7 +61,7 @@ func main() {
 	if e != nil {
 		exit(insufficientRights)
 	}
-	recorder.Gif(gifile)
+	recorder.WriteGif(gifile, *d)
 
 	k, e := os.Create(sptreeFilename)
 	if e != nil {

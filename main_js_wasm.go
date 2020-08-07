@@ -25,12 +25,19 @@ func kruskalFunc(value js.Value, args []js.Value) (ret interface{}) {
 		return
 	}
 
+	dstr := args[1].String()
+	d, e := strconv.Atoi(dstr)
+	if e != nil || d <= 0 {
+		fmt.Println("\"d\" must be of type \"Number\" and greater than zero")
+		return
+	}
+
 	g := generateGraph(N)
 	recorder := gimage.NewRecorder(g)
 	kruskal.Kruskal(recorder, g)
 
 	buf := new(bytes.Buffer)
-	recorder.Gif(buf)
+	recorder.WriteGif(buf, d)
 
 	gifbytes := buf.Bytes()
 	gifarr := js.Global().Get("Uint8Array").New(len(gifbytes))
