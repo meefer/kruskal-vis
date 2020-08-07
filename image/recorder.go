@@ -11,6 +11,7 @@ import (
 
 var (
 	red   = color.RGBA{0xff, 0x0, 0x0, 0xff}
+	grey  = color.RGBA{0x80, 0x80, 0x80, 0xff}
 	green = color.RGBA{0x0, 0xff, 0x0, 0xff}
 )
 
@@ -23,7 +24,7 @@ type Recorder struct {
 
 // NewRecorder returns a new Recorder with the given graph
 func NewRecorder(g *k.Graph) *Recorder {
-	currImg := DrawNodes(red, g)
+	currImg := DrawGraph(grey, g)
 	return &Recorder{
 		g,
 		currImg,

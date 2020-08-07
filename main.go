@@ -6,6 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"image/color"
+	"image/png"
 	"os"
 
 	gimage "github.com/meefer/kruskal-vis/image"
@@ -49,7 +50,8 @@ func main() {
 	if e != nil {
 		exit(insufficientRights)
 	}
-	gimage.DrawGraph(f, color.White, g)
+	img := gimage.DrawGraph(color.White, g)
+	png.Encode(f, img)
 
 	recorder := gimage.NewRecorder(g)
 	sptree := kruskal.Kruskal(recorder, g)
@@ -63,11 +65,12 @@ func main() {
 	}
 	recorder.WriteGif(gifile, *d)
 
-	k, e := os.Create(sptreeFilename)
+	f, e = os.Create(sptreeFilename)
 	if e != nil {
 		exit(insufficientRights)
 	}
-	gimage.DrawGraph(k, color.White, sptree)
+	img = gimage.DrawGraph(color.White, sptree)
+	png.Encode(f, img)
 }
 
 func exit(err string) {

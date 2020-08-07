@@ -4,8 +4,6 @@ import (
 	"image"
 	"image/color"
 	"image/color/palette"
-	"image/png"
-	"io"
 
 	k "github.com/meefer/kruskal-vis/kruskal"
 )
@@ -22,9 +20,9 @@ func point(n *k.Node) image.Point {
 	return image.Pt(n.X, n.Y)
 }
 
-// DrawGraph creates a picture of graph and stores it to fs
-func DrawGraph(w io.Writer, c color.Color, g *k.Graph) {
-	img := image.NewPaletted(image.Rect(0, 0, MaxWidth, MaxHeight), palette.WebSafe)
+// DrawGraph creates an image of the given graph
+func DrawGraph(c color.Color, g *k.Graph) (img *image.Paletted) {
+	img = image.NewPaletted(image.Rect(0, 0, MaxWidth, MaxHeight), palette.WebSafe)
 
 	for i, nodes := range g.Edges {
 		fromp := point(g.Nodes[i])
@@ -37,22 +35,22 @@ func DrawGraph(w io.Writer, c color.Color, g *k.Graph) {
 		}
 	}
 
-	png.Encode(w, img)
+	return
 }
 
-// DrawNodes creates a picture of graph and stores it to fs
-func DrawNodes(c color.Color, g *k.Graph) *image.Paletted {
-	img := image.NewPaletted(image.Rect(0, 0, MaxWidth, MaxHeight), palette.WebSafe)
+// DrawNodes creates an image with nodes of the given graph
+func DrawNodes(c color.Color, g *k.Graph) (img *image.Paletted) {
+	img = image.NewPaletted(image.Rect(0, 0, MaxWidth, MaxHeight), palette.WebSafe)
 
 	for i := range g.Edges {
 		fromp := point(g.Nodes[i])
 		drawCircle(img, c, fromp, r)
 	}
 
-	return img
+	return
 }
 
-// DrawEdge creates a picture of graph and stores it to fs
+// DrawEdge draws the given edge of the graph on the provided image
 func DrawEdge(img *image.Paletted, c color.Color, g *k.Graph, u, v int) *image.Paletted {
 	drawLine(img, c, point(g.Nodes[u]), point(g.Nodes[v]))
 
