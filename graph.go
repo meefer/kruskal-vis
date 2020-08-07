@@ -2,10 +2,15 @@ package main
 
 import (
 	"math/rand"
+	"time"
 
 	"github.com/meefer/kruskal-vis/image"
 	"github.com/meefer/kruskal-vis/kruskal"
 )
+
+func init() {
+	rand.Seed(time.Now().UTC().UnixNano())
+}
 
 func generateGraph(N int) (g *kruskal.Graph) {
 	// generate a random graph with N nodes
