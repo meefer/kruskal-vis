@@ -71,5 +71,6 @@ func main() {
 }
 
 func exit(err string) {
-	panic(os.Args[0] + ": " + err)
+	fmt.Println(os.Args[0] + ": " + err)
+	os.Exit(1)
 }
