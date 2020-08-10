@@ -60,16 +60,15 @@
 
             function runKruskal() {
                 const N = document.querySelector('#N').value || 10
+                const d = document.querySelector('#d').value || 20
 
                 return new Promise(async resolve => {
                     while (!ready) {
                         await sleep();
                     }
 
-                    window.Kruskal(N, resolve)
+                    window.Kruskal(N, d, resolve)
                 }).then(gifArr => {
-                    console.log(gifArr);
-
                     var blob = new Blob([gifArr], {'type': 'image/gif'});
                     var image = document.createElement('img');
                     image.src = URL.createObjectURL(blob);
@@ -88,6 +87,9 @@
             <hr/>
             <label for="N">N:</label>
             <input id="N" name="N" type="number" value="10" min="1" max="1000">
+            <hr/>
+            <label for="d">d:</label>
+            <input id="d" name="d" type="number" value="20" min="10" max="100">
             <hr/>
             <button onClick="runKruskal()">Run</button>
         </header>
