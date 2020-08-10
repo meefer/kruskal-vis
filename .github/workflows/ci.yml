@@ -14,7 +14,7 @@ jobs:
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2
     - name: Check if commit conforms to policies listed in .conform.yaml
-      uses: talos-systems/conform@v0.1.0-alpha.17
+      uses: talos-systems/conform@v0.1.0-alpha.20
     # - name: Cache deps
     #   uses: actions/cache@v1
     #   with:
